@@ -8,7 +8,7 @@ class CharactersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<CharactersModel>>(
+      body: FutureBuilder(
         future: CharactersApiServices().getAllCharacters(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -35,7 +35,7 @@ class CharactersView extends StatelessWidget {
                 width: 200,
                 height: 200,
                 color: Colors.blue,
-                child: Image.network(snapshot.data![index].image.toString()),
+                // child: Image.network(snapshot.data![index].image.toString()),
               );
             },
           );
