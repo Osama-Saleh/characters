@@ -6,7 +6,7 @@ class CharactersRepository {
   CharactersRepository(this.charactersApiServices);
 
   Future<List<CharactersModel>> getAllCharacters()async{
-   final List<Map<String,dynamic>> mapOfCharacters = await charactersApiServices.getAllCharacters();
+   final List mapOfCharacters = await charactersApiServices.getAllCharacters();
    final List<CharactersModel> listOfCharacters = [];
    for (var items in mapOfCharacters) {
         var character = CharactersModel.fromJson(items);

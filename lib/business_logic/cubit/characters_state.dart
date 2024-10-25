@@ -10,5 +10,3 @@ class CharactersLoaded extends CharactersState{
 
   CharactersLoaded({required this.characters});
 }
-
-class CharactersError extends CharactersState {}

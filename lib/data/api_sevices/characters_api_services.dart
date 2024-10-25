@@ -5,7 +5,7 @@ import 'package:clean_arc/data/models/characters.dart';
 import 'package:http/http.dart' as http;
 
 class CharactersApiServices {
- Future<List<Map<String,dynamic>>> getAllCharacters() async {
+ Future<List<dynamic>> getAllCharacters() async {
     try {
     var uri = Uri.parse(AppStrings.basicUrl + 'character');
     http.Response response = await http.get(uri);
