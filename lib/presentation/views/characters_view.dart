@@ -1,5 +1,6 @@
 import 'package:clean_arc/business_logic/cubit/characters_cubit.dart';
 import 'package:clean_arc/data/models/characters.dart';
+import 'package:clean_arc/helper/app_routes.dart';
 import 'package:clean_arc/presentation/widgets/search_build.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,39 +91,47 @@ class _CharactersViewState extends State<CharactersView> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 20, crossAxisSpacing: 20),
               itemBuilder: (context, index) {
-                return GridTile(
-                    footer: Container(
-                      color: Colors.black.withOpacity(0.8),
-                      child: Center(
-                        child: Text(
-                         charactersController.searchController.text.isNotEmpty?charactersController.searchCharacters[index].name!: allCharacters![index].name!,
-                          style: const TextStyle(
-                              fontSize: 20, color: Colors.white),
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.charactersDetailsView,arguments: charactersController.allCharacterss[index] );
+                  },
+                  child: GridTile(
+                      footer: Container(
+                        color: Colors.black.withOpacity(0.8),
+                        child: Center(
+                          child: Text(
+                           charactersController.searchController.text.isNotEmpty?charactersController.searchCharacters[index].name!: allCharacters![index].name!,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Image.network(
-                     charactersController.searchController.text.isNotEmpty?charactersController.searchCharacters[index].image!: allCharacters![index].image!,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          //* Image loaded successfully
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    (loadingProgress.expectedTotalBytes ?? 1)
-                                : null, // Show loading progress
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Icon(Icons.error),
-                        );
-                      },
-                    ));
+                      child: Hero(
+                        tag:allCharacters![index].id! ,
+                        child: Image.network(
+                         charactersController.searchController.text.isNotEmpty?charactersController.searchCharacters[index].image!: allCharacters![index].image!,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              //* Image loaded successfully
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ?? 1)
+                                    : null, // Show loading progress
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Icon(Icons.error),
+                            );
+                          },
+                        ),
+                      )),
+                );
               },
             );
           } else {
